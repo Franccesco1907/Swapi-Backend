@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { PeopleService } from './people.service';
+import { ApiInternalServerErrorResponse, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('people')
 @Controller('people')
 export class PeopleController {
-  constructor(private readonly peopleService: PeopleService) {}
+  constructor(private readonly peopleService: PeopleService) { }
 
   @Post()
   create(@Body() createPersonDto: CreatePersonDto) {
@@ -12,6 +14,12 @@ export class PeopleController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'The people were retrieved.' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'The people could not be retrieved.' })
+  @ApiInternalServerErrorResponse({ description: 'Swapi Server Error' })
+  @ApiQuery({ name: 'page', required: true, type: String })
   findUntilPage(@Query('page') page: string) {
     return this.peopleService.findUntilPage(+page);
   }
