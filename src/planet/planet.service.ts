@@ -2,10 +2,16 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePlanetDto } from './dto/create-planet.dto';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { Planet } from './entities/planet.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PlanetService {
-  constructor( private readonly httpService: HttpService) { }
+  constructor(
+    private readonly httpService: HttpService,
+    @InjectRepository(Planet)
+    private readonly planetRepository: Repository<Planet>) { }
 
   create(createPlanetDto: CreatePlanetDto) {
     return 'This action adds a new planet';
@@ -40,9 +46,19 @@ export class PlanetService {
 
   async findOne(id: number) {
     try {
-      const { data } = await firstValueFrom(
-        this.httpService.get(`${id}`)
-      )
+      if (id < 1) {
+        throw new HttpException('Invalid id number', HttpStatus.BAD_REQUEST);
+      }
+      
+      const planet = await this.planetRepository.findOneBy({ id });
+      if (planet) {
+        return planet;
+      }
+
+      const { data } = await firstValueFrom(this.httpService.get(`${id}`))
+
+      await this.planetRepository.save({ id, ...data });
+
       return data;
     } catch (error) {
       console.error(`The following error has ocurred: ${error}`);
