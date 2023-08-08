@@ -13,7 +13,10 @@ export class PeopleService {
     private readonly peopleRepository: Repository<People>
     ) { }
   create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+    const number = 10000;
+    const random = number + Math.floor(Math.random() * number);
+
+    return this.peopleRepository.save({ id: random, ...createPersonDto });
   }
 
   async findUntilPage(page: number) {
@@ -61,7 +64,7 @@ export class PeopleService {
       return data;
     } catch (error) {
       console.error(`The following error has ocurred: ${error}`);
-      throw new HttpException(`The people could not be retrieved`, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new HttpException(`The person could not be retrieved`, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }
