@@ -23,9 +23,11 @@ export class AllExceptionFilter implements ExceptionFilter {
     this.logger.error(`Status ${status} Error: ${JSON.stringify(msg)}`);
     res.status(status).json({
       status: status,
-      timestamps: new Date().toISOString(),
-      path: req.url,
-      error: msg,
+      data: null,
+      errors: {
+        error: msg,
+        path: req.url,
+      }
     });
   }
 }
