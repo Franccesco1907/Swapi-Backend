@@ -1,22 +1,22 @@
-import { AbstractEntity } from "src/database/abstract.entity";
+import { AbstractEntity } from "../../database/abstract.entity";
 import { Column, Entity } from "typeorm";
 
 @Entity({ name: 'planet' })
 export class Planet extends AbstractEntity<Planet> {
   @Column('text', { nullable: false })
-  climate
+  climate: string;
   @Column('text', { nullable: false })
-  diameter
+  diameter: string;
   @Column('text', { nullable: false })
-  gravity
+  gravity: string;
   @Column('text', { nullable: false })
-  name
+  name: string;
   @Column('text', { nullable: false })
-  population
+  population: string;
   @Column('text', { nullable: false })
-  residents
+  terrain: string;
   @Column('text', { nullable: false })
-  terrain
-  @Column('text', { nullable: false })
-  url
+  url: string;
+  @Column('text', { nullable: false, array: true, default: [] })
+  residents: string[];
 }

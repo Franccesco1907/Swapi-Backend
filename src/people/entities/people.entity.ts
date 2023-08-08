@@ -1,9 +1,8 @@
-import { AbstractEntity } from "src/database/abstract.entity";
+import { AbstractEntity } from "../../database/abstract.entity";
 import { Column, Entity } from "typeorm";
 
 @Entity({ name: 'people' })
 export class People extends AbstractEntity<People> {
-
   @Column('text', { nullable: false })
   name: string;
   @Column('text', { nullable: false })
@@ -15,17 +14,13 @@ export class People extends AbstractEntity<People> {
   @Column('text', { nullable: false })
   hair_color: string;
   @Column('text', { nullable: false })
-  height;
+  height: string;
   @Column('text', { nullable: false })
   homeworld;
   @Column('text', { nullable: false })
-  mass;
+  mass: string;
   @Column('text', { nullable: false })
-  skin_color;
+  skin_color: string;
   @Column('text', { nullable: false })
-  created;
-  @Column('text', { nullable: false })
-  edited;
-  @Column('text', { nullable: false })
-  url;
+  url: string;
 }

@@ -14,7 +14,10 @@ export class PlanetService {
     private readonly planetRepository: Repository<Planet>) { }
 
   create(createPlanetDto: CreatePlanetDto) {
-    return 'This action adds a new planet';
+    const number = 10000;
+    const random = number + Math.floor(Math.random() * number);
+
+    return this.planetRepository.save({ id: random, ...createPlanetDto });
   }
 
   async findUntilPage(page: number) {
@@ -49,7 +52,7 @@ export class PlanetService {
       if (id < 1) {
         throw new HttpException('Invalid id number', HttpStatus.BAD_REQUEST);
       }
-      
+
       const planet = await this.planetRepository.findOneBy({ id });
       if (planet) {
         return planet;
@@ -62,7 +65,7 @@ export class PlanetService {
       return data;
     } catch (error) {
       console.error(`The following error has ocurred: ${error}`);
-      throw new HttpException(`The planets could not be retrieved`, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new HttpException(`The planet could not be retrieved`, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }
