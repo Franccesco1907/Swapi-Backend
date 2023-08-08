@@ -1,73 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Swapi Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a NestJS backend that utilizes the Star Wars public API (SWAPI) through https://swapi.dev/.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies Used
 
-## Description
+* **NestJS:** Node.js framework for building robust and scalable backend applications.
+* **Docker Compose:** Tool for defining and running multi-container Docker applications.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Running the Project with Docker Compose
 
-## Installation
+To run the complete project, make sure you have Docker and Docker Compose installed on your system. Then, follow the steps below:
 
-```bash
-$ npm install
+1. Clone this repository to your local machine.
+2. Navigate to the root of the project where the `docker-compose.yml` file is located.
+3. Run the following command to start the backend and frontend services:
+
+```shell
+docker-compose up
 ```
 
-## Running the app
+This will create and start Docker containers for the backend (NestJS).
 
-```bash
-# development
-$ npm run start
+4. Once all the containers are up and running, you can access the application through the following link:
 
-# watch mode
-$ npm run start:dev
+* Backend (NestJS): `http://localhost:3000`
 
-# production mode
-$ npm run start:prod
+## Test Commands for NestJS
+
+The backend project (NestJS) includes unit and integration tests to ensure code quality. You can run these tests inside Docker using the following command:
+
+```shell
+docker-compose run backend npm run test
 ```
 
-## Test
+This command will execute all the defined tests in the project and display the results in the console.
 
-```bash
-# unit tests
-$ npm run test
+## API Documentation with Swagger
 
-# e2e tests
-$ npm run test:e2e
+The backend (NestJS) is documented using Swagger, which provides an interactive interface to explore and test API endpoints. You can access the documentation at the following link:
 
-# test coverage
-$ npm run test:cov
+* API Documentation (Swagger): `http://localhost:3000/docs`
+
+The Swagger-generated documentation will show you the different endpoints available in the backend along with details about the required parameters and expected responses.
+
+## Additional Notes
+
+* If you want to stop the containers, you can press `Ctrl + C` in the terminal where the services are running and then execute the following command to stop and remove the containers:
+
+```shell
+docker-compose down
 ```
 
-## Support
+* If you encounter any issues while running the project or have any questions, feel free to contact me.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Thank you for checking out this project!
 
-## Stay in touch
+### TOP CUSTOMER QUERY EXAMPLE
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+This README provides an example of a SQL query to identify top customers based on their monthly order value. The query involves creating tables and inserting sample data, as well as querying for the top customers.
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+## Table Creation and Data Insertion
+
+To begin, you can create tables `orders` and `order_details`, and insert sample data into them.
+
+```pgsql
+-- Create the orders table
+CREATE TABLE orders (
+	orderid int NOT NULL,
+	customerid int NOT NULL,
+	orderdate date NOT NULL
+);
+
+-- Create the order_details table
+CREATE TABLE order_details (
+	orderid int NOT NULL,
+	productid int NOT NULL,
+	unitprice int NOT NULL,
+	quantity int NOT NULL
+);
+
+-- Insert sample data into the orders table
+INSERT INTO orders (orderid, customerid, orderdate)
+VALUES
+(10248, 3, '1996-07-04'),
+(10249, 1, '1996-07-05'),
+(10253, 2, '1996-07-10'),
+(10274, 3, '1996-08-06'),
+(10275, 4, '1996-08-07'),
+(10296, 5, '1996-09-03');
+
+-- Insert sample data into the order_details table
+INSERT INTO order_details(orderid, productid, unitprice, quantity)
+VALUES
+(10248, 11, 14, 12),
+(10248, 42, 9, 10),
+(10248, 72, 34, 5),
+(10249, 14, 18, 9),
+(10249, 51, 42, 40),
+(10253, 31, 10, 20),
+(10253, 39, 14, 42),
+(10253, 49, 16, 40),
+(10274, 71, 17, 20),
+(10274, 72, 27, 7),
+(10275, 24, 3, 12),
+(10275, 59, 44, 6),
+(10296, 11, 16, 12),
+(10296, 16, 13, 30),
+(10296, 69, 28, 15);
+```
+
+## Querying Top Customers
+
+To identify the top customers based on their total monthly order value, you can execute the following query:
+
+```pgsql
+SELECT year, month, customerid, total_monthly_order_value
+FROM (
+    SELECT
+        date_part('YEAR', o.orderdate) AS year,
+        date_part('MONTH', o.orderdate) AS month,
+        o.customerid,
+        SUM(od.unitprice * od.quantity) AS total_monthly_order_value,
+        RANK() OVER (PARTITION BY date_part('YEAR', o.orderdate), date_part('MONTH', o.orderdate) ORDER BY SUM(od.unitprice * od.quantity) DESC) AS customer_rank
+    FROM
+        orders o
+    INNER JOIN
+        order_details od ON o.orderid = od.orderid
+    GROUP BY
+        year,
+        month,
+        o.customerid
+) ranked_orders
+WHERE
+    customer_rank = 1
+ORDER BY
+    year, month, customerid ASC;
+```
+
+This query calculates the total monthly order value for each customer, ranks them based on their order values, and then selects the top customer for each year and month combination.
+
+Feel free to modify the sample data and the query to suit your specific use case and database schema.
+
+## Contribution
+
+Feel free to contribute to the project by opening issues or submitting pull requests.
