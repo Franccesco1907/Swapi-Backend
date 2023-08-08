@@ -1,16 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common/pipes';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
-    .setTitle('API')
-    .setDescription('Swapi API')
+    .setTitle('Star Wars API')
+    .setDescription(
+      `Star Wars API
+    <br>Created by: <b>Franccesco Jaimes Agreda</b>
+    <br>GitHub: <a href="https://github.com/Franccesco1907" target="_blank">Franccesco1907</a>
+    <br>Linkedin: <a href="https://www.linkedin.com/in/franccesco-michael-jaimes-agreda-7a00511a8/" target="_blank">Franccesco Michael Jaimes Agreda</a>
+    <br>Gmail: <a href="mailto:franccescojaimesagreda@gmail.com">franccescojaimesagreda@gmail.com</a>
+    `)
     .setVersion('1.0')
-    .addTag('Swapi')
+    .addTag('Star Wars API')
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
